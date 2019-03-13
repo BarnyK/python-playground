@@ -14,7 +14,7 @@ C_SUITS_DICT = {"D":"Diamonds", "H":"Hearts", "C":"Clubs", "S":"Spades"}
 C_SUITS = ['D','H','C','S']
 C_FACES = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
 
-class card():
+class Card():
     """
     Card class contains values of suit and a face of a card
     """
@@ -40,12 +40,12 @@ class card():
         return "{} of {}".format(self.val,C_SUITS_DICT[self.n[-1]]) 
 
 
-class deck():
+class Deck():
     def __init__(self, empty=False):
         # Creates a deck of cards, empty or full 
         self.cards = []
         if(empty==False):
-            self.cards = [card(x+y) for y in C_SUITS for x in C_FACES]
+            self.cards = [Card(x+y) for y in C_SUITS for x in C_FACES]
 
     def __repr__(self):
         return ', '.join([c.__repr__() for c in self.cards])
@@ -60,7 +60,7 @@ class deck():
         try:
             return self.cards.pop(0)
         except:
-            print('pusto')
+            print('Empty')
 
     def add(self, *elems):
         # Adds a card to the bottom
@@ -120,50 +120,53 @@ def war():
             return False
     else:
         return False
-    
-# Creation of main deck of cards
-cards = deck()
-cards.shuffles()
 
-# Creation of player decks and table stacks
-a = deck(empty=True)
-b = deck(empty=True)
-t_a = deck(empty=True)
-t_b = deck(empty=True)
+def main():
+    # Creation of main deck of cards
+    cards = Deck()
+    cards.shuffles()
 
-# Dealing the cards
-for x in range(26):
-    a.add(cards.give())
-    b.add(cards.give())
+    # Creation of player decks and table stacks
+    a = Deck(empty=True)
+    b = Deck(empty=True)
+    t_a = Deck(empty=True)
+    t_b = Deck(empty=True)
+
+    # Dealing the cards
+    for x in range(26):
+        a.add(cards.give())
+        b.add(cards.give())
 
 
-print('Karty pierwszego: {}'.format(a))
-print('Karty drugiego: {}'.format(b))
+    print('Karty pierwszego: {}'.format(a))
+    print('Karty drugiego: {}'.format(b))
 
-# Start of game loop, first checks if the games wasn't won already
-# If it was, says who won and how many turns it took
-# If it wasn't, the game still loops
+    # Start of game loop, first checks if the games wasn't won already
+    # If it was, says who won and how many turns it took
+    # If it wasn't, the game still loops
 
-turns=0
-while True:
-    if turns>5000:
-        print('Turn overflow')
-        break
-    if a.isEmpty():
-        print('Second player won')
-        break
-    if b.isEmpty():
-        print('First player won')
-        break
-    turns+=1
-    c_a = a.give()
-    t_a.add(c_a)
-    
-    c_b = b.give()
-    t_b.add(c_b)
-    
-    if not fight(c_a,c_b):
-        print('Draw')
-        break
-    
-print(turns)
+    turns=0
+    while True:
+        if turns>5000:
+            print('Turn overflow')
+            break
+        if a.isEmpty():
+            print('Second player won')
+            break
+        if b.isEmpty():
+            print('First player won')
+            break
+        turns+=1
+        c_a = a.give()
+        t_a.add(c_a)
+        
+        c_b = b.give()
+        t_b.add(c_b)
+        
+        if not fight(c_a,c_b):
+            print('Draw')
+            break
+    print(turns)
+
+if __name__ == "__main__":
+    main()
