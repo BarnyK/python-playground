@@ -121,11 +121,11 @@ def war():
     else:
         return False
 
-def main():
+
+if __name__=="__main__":
     # Creation of main deck of cards
     cards = Deck()
     cards.shuffles()
-
     # Creation of player decks and table stacks
     a = Deck(empty=True)
     b = Deck(empty=True)
@@ -138,8 +138,8 @@ def main():
         b.add(cards.give())
 
 
-    print('Karty pierwszego: {}'.format(a))
-    print('Karty drugiego: {}'.format(b))
+    print('First players cards:  {}'.format(a))
+    print('Second players cards: {}'.format(b))
 
     # Start of game loop, first checks if the games wasn't won already
     # If it was, says who won and how many turns it took
@@ -167,6 +167,3 @@ def main():
             print('Draw')
             break
     print(turns)
-
-if __name__ == "__main__":
-    main()
